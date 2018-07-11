@@ -14,12 +14,19 @@ class Especie (
     val tipoPrincipal: String,
     var especieAEvolucionar : Especie = null,
     var condicionParaEvolucionar : CondicionEvolucionar = null,
-    val tipoSecundario: String = null
+    var tipoSecundario: String = null
 ){
   
+  def agregarSegundoTipoEspecie(str: String): Especie =  {
+    this.tipoSecundario = str;
+    this
+  }
+  
   def crearPokemon(incExp:Int, incEn:Int, incEnMax: Int, incFue: Int, incVel: Int, nombreP: String) : Pokemon = {
-    // Crea un pokemon En base a las caracteristicas de la especie sumandole las cantidades 
-    // respectivas recibidas 
+    /* Crea un pokemon En base a las caracteristicas de la especie sumandole las cantidades 
+     *  respectivas recibidas 
+     * 
+     */
     val res : Pokemon = new Pokemon(
         this, 
         this.experiencia + incExp , 
@@ -32,6 +39,9 @@ class Especie (
   }
   
   def evolucionarSiPuede(pok: Pokemon) : Pokemon = {
+    /*
+     * El pokemon realiza la evolucion segun la conficionDeEvolucion correspondiente a la Especie si es que tiene una.
+     */
     
     this.condicionParaEvolucionar  match {
       case e : CondicionSubirExperiencia => {

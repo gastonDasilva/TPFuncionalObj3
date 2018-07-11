@@ -32,6 +32,29 @@ class TestPokemon {
   }
   
   @Test
+  def testearQueUnPokemonAlHacerUnaActDePesasYTeniendoTipoSecPELEASubeDeExpPorDos():Unit ={
+    var ratonElectrico = new Especie("Pikachu",0,10,100,95,50,"Fuego").agregarSegundoTipoEspecie("Pelea")
+    var pikachu = ratonElectrico.crearPokemon(0, 50, 0, 0, 0,"Pikachu")
+    assertEquals(60,pikachu.energia)
+    // Haciendo que Pikachu haga una actividad de pesas
+    val actividadLevantarPesas = new ActividadLevantarPesas(3);
+    val pikachuMasFuerte = gim.realizarActividad(actividadLevantarPesas, pikachu)
+    assertEquals(6,pikachuMasFuerte.experiencia)
+  }
+  
+ @Test
+ def testearQueUnPokemonConSegundoTipoAguaAlHacerUnaActDeNadoLeSumeVelocidadYExp():Unit = {
+    var squirtleAgua = new Especie("Squirtle",0,100,100,95,50,"Viento").agregarSegundoTipoEspecie("Agua")
+    var squirtle = squirtleAgua.crearPokemon(0, 0, 0, 0, 0, "SquirtleVientoso")
+    assertEquals(100,squirtle.energia)
+    val actividadNadar = new ActividadNadar(63);
+    val squirtleBuceador = gim.realizarActividad(actividadNadar, squirtle)
+    assertEquals(12600,squirtleBuceador.experiencia)
+    assertEquals(37,squirtleBuceador.energia)
+    assertEquals(51,squirtleBuceador.velocidad)
+ }
+  
+  @Test
   def testearQueUnPokemonAguaAlHacerUnaActDeNadoLeSumeVelocidadYExp():Unit = {
     var squirtleAgua = new Especie("Squirtle",0,100,100,95,50,"Agua")
     var squirtle = squirtleAgua.crearPokemon(0, 0, 0, 0, 0, "Squirtle")
@@ -67,9 +90,7 @@ class TestPokemon {
     val sartinFantasmal = gim.realizarActividad(actividadLevantarPesas, sartin)
     assertEquals(0,sartinFantasmal.experiencia)
     assertEquals(20,sartinFantasmal.energia)
-    
-     
-    
+   
   }
   
   
@@ -86,6 +107,18 @@ class TestPokemon {
     assertEquals(0,geodudeBuceador.experiencia)
     assertEquals("K.O",geodudeBuceador.estado.string)
     
+  }
+  
+  @Test
+  def testearQueUnPokemonQuePierdeConElAguaQuedaKOYNoRecibeNadaDeExpAdemasDeQuedadKO():Unit = {
+    var geodudeEsp = new Especie("Geodude",0,20,100,60,50,"Viento").agregarSegundoTipoEspecie("Fuego")
+    var geodude = geodudeEsp.crearPokemon(0, 0, 0, 0, 0, "GeodudeFueguino")
+    assertEquals(20,geodude.energia)
+    
+    val actividadNadar = new ActividadNadar(13);
+    val geodudeBuceador = gim.realizarActividad(actividadNadar, geodude)
+    assertEquals(0,geodudeBuceador.experiencia)
+    assertEquals("K.O",geodudeBuceador.estado.string)
   }
   
   @Test
